@@ -1,0 +1,29 @@
+<!--
+    This is the equivalent of Jim's main page that had the picture on it.
+    Will start with just a button that goes to the menu chooser page.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>The Sandwich Shop Main Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="style/mystyle.css">
+    </head>
+    <body>
+        <div>
+            <h1>
+                Welcome to The Sandwich Shop
+            </h1>
+            <p>The Sandwich Shop was has been in business since 2013.</p>
+            <p>We have just set up an online order system.  Please click the button</p>
+            <p>below to place an order.</p>
+            <form class="myform" id="menu" name="menu" 
+                    method="POST" action="MenuController">
+                <input type='submit' name="submit" value="See the Online Menu" class="mybutton1" />
+            
+            </form>
+            <img  src="Images/Muffaletta1.jpg">
+
+        </div>
+    </body>
+</html>
