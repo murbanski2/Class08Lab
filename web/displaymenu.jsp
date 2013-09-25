@@ -13,30 +13,49 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>The Sandwich Shop Menu</title>
+        <script type="text/javascript" language="JavaScript">
+<!--
+            function checkCheckBoxes() {
+                var checkBoxes = document.getElementsByClassName("checkbox");
+
+                for (var i = 0; i < checkBoxes.length; i++) {
+                    if (checkBoxes[i].checked) {
+                        return true;
+                    }
+                }
+
+                alert("Select at least one menu item");
+                return false;
+            }
+//-->
+        </script> 
     </head>
     <body>
         <form id="choices" name="choices" 
-                    method="POST" action="OrderController">
-        <h1>Choose from the menu and then submit</h1>
-        <br/>
-        <%
-            List menu = (List)request.getAttribute("menu");
-            Iterator it = menu.iterator();
-            int count = -1; //So that when I increment count, it will be zero.
-            
-            while(it.hasNext()) {
-                count++;
-                MenuItem item = (MenuItem)it.next();
-                String outItem = item.getName() + "    $" + item.getPrice();
-        %>
-                
-                <input type="checkbox" name="item" value="<%= count %>"><%= outItem %><br>
-        <%
-            }
-        %>
+              method="POST" action="OrderController"
+              onsubmit="return checkCheckBoxes();">
+            <h1>Choose from the menu and then submit</h1>
+            <br/>
+            <%
+                List menu = (List) request.getAttribute("menu");
+                Iterator it = menu.iterator();
+                int count = -1; //So that when I increment count, it will be zero.
+
+                while (it.hasNext()) {
+                    count++;
+                    MenuItem item = (MenuItem) it.next();
+                    String outItem = item.getName() + "    $" + item.getPrice();
+            %>
+
+            <input type="checkbox" name="item" 
+                   value="<%= count%>" class="checkbox">
+            <%= outItem%><br>
+            <%
+                }
+            %>
             <br/><br/>
             <input type='submit' name="submit" 
-                value="Place your order" class="mybutton1" />
+                   value="Place your order" class="mybutton1" />
         </form>
     </body>
 </html>
