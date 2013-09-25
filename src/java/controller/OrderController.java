@@ -43,7 +43,7 @@ public class OrderController extends HttpServlet {
         //try {
             String[] choices = request.getParameterValues("item"); 
             //MenuDataModelStrategy data = new MenuDataModelTest();
-            MenuDataModelStrategy data = new MenuDataModel();
+            IMenuDataDAO data = new MySqlMenuDataDAO();
             
             List menu = data.getMenuItems();
             request.setAttribute("menu", menu);

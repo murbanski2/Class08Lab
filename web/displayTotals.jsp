@@ -29,7 +29,7 @@
             for(String s: choices) {
                 int i = Integer.parseInt(s);
                 MenuItem item = (MenuItem)menu.get(i);
-                String outItem = item.getItem() + "    $" + item.getPrice();
+                String outItem = item.getName() + "    $" + item.getPrice();
         %>
             <p><%= outItem %></p>            
         <%

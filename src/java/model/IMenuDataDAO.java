@@ -10,6 +10,6 @@ import java.util.List;
  *
  * @author Mark
  */
-public interface MenuDataModelStrategy {
+public interface IMenuDataDAO {
     public abstract List getMenuItems();
 }

@@ -27,7 +27,7 @@
             while(it.hasNext()) {
                 count++;
                 MenuItem item = (MenuItem)it.next();
-                String outItem = item.getItem() + "    $" + item.getPrice();
+                String outItem = item.getName() + "    $" + item.getPrice();
         %>
                 
                 <input type="checkbox" name="item" value="<%= count %>"><%= outItem %><br>

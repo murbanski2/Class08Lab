@@ -11,20 +11,20 @@ import java.util.Objects;
  * @author Mark
  */
 public class MenuItem {
-    String item;
+    String name;
     double price;
 
     public MenuItem(String item, double price) {
-        this.item = item;
+        this.name = item;
         this.price = price;
     }
 
-    public String getItem() {
-        return item;
+    public String getName() {
+        return name;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getPrice() {
@@ -37,13 +37,13 @@ public class MenuItem {
 
     @Override
     public String toString() {
-        return "MenuItem{" + "item=" + item + ", price=" + price + '}';
+        return "MenuItem{" + "item=" + name + ", price=" + price + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.item);
+        hash = 53 * hash + Objects.hashCode(this.name);
         hash = 53 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
         return hash;
     }
@@ -57,7 +57,7 @@ public class MenuItem {
             return false;
         }
         final MenuItem other = (MenuItem) obj;
-        if (!Objects.equals(this.item, other.item)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         if (Double.doubleToLongBits(this.price) != Double.doubleToLongBits(other.price)) {

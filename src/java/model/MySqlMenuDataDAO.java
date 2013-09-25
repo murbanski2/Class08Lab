@@ -4,7 +4,7 @@
  */
 package model;
 
-import db.accessor.DB_Generic;
+import db.accessor.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +13,14 @@ import java.util.Map;
  *
  * @author Mark
  */
-public class MenuDataModel implements MenuDataModelStrategy {
+public class MySqlMenuDataDAO implements IMenuDataDAO {
 
     @Override
     public List getMenuItems() {
         List<Map> rawData = new ArrayList<>();
         List<MenuItem> menu = new ArrayList<>();
 
-        DB_Generic db = new DB_Generic();
+        DBAccessor db = new DB_Generic();
         String driverClassName = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/restaurant";
         String userName = "root";

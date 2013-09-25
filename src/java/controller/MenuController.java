@@ -39,7 +39,7 @@ public class MenuController extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             //MenuDataModelStrategy data = new MenuDataModelTest();
-            MenuDataModelStrategy data = new MenuDataModel();
+            IMenuDataDAO data = new MySqlMenuDataDAO();
             List menu = data.getMenuItems();
             request.setAttribute("menu", menu);
             RequestDispatcher view =
