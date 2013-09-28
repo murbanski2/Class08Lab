@@ -20,7 +20,7 @@ public class MySqlMenuDataDAO implements IMenuDataDAO {
         List<Map> rawData = new ArrayList<>();
         List<MenuItem> menu = new ArrayList<>();
 
-        DBAccessor db = new DB_Generic();
+        DBAccessor db = new DB_MySql();
         String driverClassName = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/restaurant";
         String userName = "root";
@@ -30,12 +30,13 @@ public class MySqlMenuDataDAO implements IMenuDataDAO {
             db.openConnection(driverClassName, url,
                     userName, password);
 
-            rawData = db.findRecords("select item, price from menu", true);
+            rawData = db.findRecords("select id, name, price from menu", true);
             for (Map m : rawData) {
-                String item = m.get("item").toString();
+                int id = Integer.parseInt(m.get("id").toString());
+                String name = m.get("name").toString();
                 String strPrice = m.get("price").toString();
                 double price = Double.parseDouble(strPrice);
-                menu.add(new MenuItem(item, price));
+                menu.add(new MenuItem(id, name, price));
             }
             
         } catch (Exception e) {

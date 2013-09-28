@@ -1,7 +1,7 @@
 package db.accessor;
 
 /*
- * @(#)DB_Generic.java	1.52 5/3/2006
+ * @(#)DB_MySql.java	1.52 5/3/2006
  * Author: Jim Lombardo, WCTC Lead Java Instructor
  *
  * Copyright (c) 2006-2010 Waukesha County Technical College.
@@ -18,7 +18,7 @@ import java.util.*;
 import java.sql.*;
 
 /**
- * <code>DB_Generic</code> is a general purpose class providing services 
+ * <code>DB_MySql</code> is a general purpose class providing services 
  * for querying, inserting, updating and deleting records in most ANSI-compliant
  * databases. It has been successfully tested on MS-SQL Server 7 and 2000.
  * <p>
@@ -32,7 +32,7 @@ import java.sql.*;
  * @author 	Jim Lombardo
  * @version 	1.6 5/3/2010
  */
-public class DB_Generic implements DBAccessor {
+public class DB_MySql implements DBAccessor {
 	private Connection conn;
 
 	/**
@@ -40,7 +40,7 @@ public class DB_Generic implements DBAccessor {
 	 * immediately open a connection to the database. When the
 	 * connection is needed, call the openConnection method.
 	 */
-	public DB_Generic() {}
+	public DB_MySql() {}
 	
 	
 	/**
@@ -493,7 +493,7 @@ public class DB_Generic implements DBAccessor {
         
         public static void main(String[] args) throws Exception {
 
-            DB_Generic db = new DB_Generic();
+            DB_MySql db = new DB_MySql();
 		String driverClassName = "com.mysql.jdbc.Driver";
 		String url = "jdbc:mysql://localhost:3306/restaurant";
 		String userName = "root";

@@ -1,0 +1,21 @@
+/* 
+    Document   : mystyle
+    Created on : Sep 25, 2013, 8:20:29 PM
+    Author     : Mark
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+.mybutton1{
+    width: 20em;
+    
+}
+.sandwich{
+    width: 480px;
+    height: 360px;
+    
+}
+
