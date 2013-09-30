@@ -5,6 +5,7 @@
 package model;
 
 import db.accessor.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +21,8 @@ public class MySqlMenuDataDAO implements IMenuDataDAO {
     String URL = "jdbc:mysql://localhost:3306/restaurant";
     String USER_NAME = "root";
     String PASSWORD = "admin";
+    String TABLE = "menu";
+    String KEY = "item_id";
 
     @Override
     public List getMenuItems() {
@@ -94,6 +97,27 @@ public class MySqlMenuDataDAO implements IMenuDataDAO {
         }
     }
 
+    public int deleteMenuItem(int id) {
+        DBAccessor db = new DB_MySql();
+        int itemsDeleted = 0;
+
+        try {
+            db.openConnection(DRIVER_CLASS_NAME, URL,
+                    USER_NAME, PASSWORD);
+            itemsDeleted = db.deleteRecords(TABLE, "ID", id, true);
+        } catch (SQLException e1) {
+            //throw new DataAccessException(e1.getMessage(), e1);
+            System.out.println("deleteMenuItem: " + e1);
+
+        } catch (Exception e2) {
+            //throw new DataAccessException(e2.getMessage(), e2);
+            System.out.println("deleteMenuItem: " + e2);
+        } finally {
+            return itemsDeleted;
+        }
+
+    }
+
     public static void main(String[] args) {
         MySqlMenuDataDAO data = new MySqlMenuDataDAO();
         //Get a menu item by id, where id = 4
@@ -111,12 +135,12 @@ public class MySqlMenuDataDAO implements IMenuDataDAO {
             System.out.println(item);
         }
         System.out.println("");
-        
+
         //Get menu items 1, 4, 7, 9
         String[] choices = {"1", "4", "7", "9"};
         menu = data.getSelectedMenuItems(choices);
-        
-        for(MenuItem mi:menu){
+
+        for (MenuItem mi : menu) {
             System.out.println(mi);
         }
     }
