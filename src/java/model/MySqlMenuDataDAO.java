@@ -6,6 +6,7 @@ package model;
 
 import db.accessor.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,34 +16,108 @@ import java.util.Map;
  */
 public class MySqlMenuDataDAO implements IMenuDataDAO {
 
+    String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
+    String URL = "jdbc:mysql://localhost:3306/restaurant";
+    String USER_NAME = "root";
+    String PASSWORD = "admin";
+
     @Override
     public List getMenuItems() {
         List<Map> rawData = new ArrayList<>();
         List<MenuItem> menu = new ArrayList<>();
 
         DBAccessor db = new DB_MySql();
-        String driverClassName = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/restaurant";
-        String userName = "root";
-        String password = "admin";
 
         try {
-            db.openConnection(driverClassName, url,
-                    userName, password);
-
-            rawData = db.findRecords("select id, name, price from menu", true);
+            db.openConnection(DRIVER_CLASS_NAME, URL,
+                    USER_NAME, PASSWORD);
+            String sql = "select item_id, name, price from restaurant.menu";
+            rawData = db.findRecords(sql, true);
             for (Map m : rawData) {
-                int id = Integer.parseInt(m.get("id").toString());
+                String strId = m.get("item_id").toString();
+                int id = Integer.parseInt(strId);
                 String name = m.get("name").toString();
                 String strPrice = m.get("price").toString();
                 double price = Double.parseDouble(strPrice);
                 menu.add(new MenuItem(id, name, price));
             }
-            
+
         } catch (Exception e) {
             System.out.println("Exception in getMenuItems()");
         } finally {
             return menu;
+        }
+    }
+
+    public List getSelectedMenuItems(String[] choices) {
+        List<MenuItem> menu = new ArrayList<>();
+
+        try {
+            for (String s : choices) {
+                int i = Integer.parseInt(s);
+                MenuItem item = getMenuItemByID(i);
+                menu.add(item);
+            }
+        } catch (Exception e) {
+            System.out.println("Exception in getSelectedMenuItems()");
+        } finally {
+            return menu;
+        }
+    }
+
+    public MenuItem getMenuItemByID(int id) {
+        List<Map> rawData = new ArrayList<>();
+        MenuItem item = new MenuItem(0, "", 0.0);
+        DBAccessor db = new DB_MySql();
+
+        try {
+            db.openConnection(DRIVER_CLASS_NAME, URL,
+                    USER_NAME, PASSWORD);
+            String sql = "select item_id, name, price from restaurant.menu "
+                    + "where item_id=" + id;
+
+            rawData = db.findRecords(sql, true);
+            for (Map m : rawData) {
+                String strId = m.get("item_id").toString();
+                id = Integer.parseInt(strId);
+                String name = m.get("name").toString();
+                String strPrice = m.get("price").toString();
+                double price = Double.parseDouble(strPrice);
+
+                item = new MenuItem(id, name, price);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Exception in getMenuItems()");
+        } finally {
+            return item;
+        }
+    }
+
+    public static void main(String[] args) {
+        MySqlMenuDataDAO data = new MySqlMenuDataDAO();
+        //Get a menu item by id, where id = 4
+        int id = 4;
+        MenuItem item = data.getMenuItemByID(id);
+        System.out.println(item);
+        System.out.println("");
+
+        //Get all menu items
+        List<MenuItem> menu = data.getMenuItems();
+        Iterator it = menu.iterator();
+
+        while (it.hasNext()) {
+            item = (MenuItem) it.next();
+            System.out.println(item);
+        }
+        System.out.println("");
+        
+        //Get menu items 1, 4, 7, 9
+        String[] choices = {"1", "4", "7", "9"};
+        menu = data.getSelectedMenuItems(choices);
+        
+        for(MenuItem mi:menu){
+            System.out.println(mi);
         }
     }
 }

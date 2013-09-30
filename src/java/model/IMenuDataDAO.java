@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface IMenuDataDAO {
     public abstract List getMenuItems();
+    public abstract List getSelectedMenuItems(String[] choices);
+    public abstract MenuItem getMenuItemByID(int id);
 }

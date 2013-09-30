@@ -39,16 +39,17 @@
             <%
                 List menu = (List) request.getAttribute("menu");
                 Iterator it = menu.iterator();
-                int count = -1; //So that when I increment count, it will be zero.
+                //int count = -1; //So that when I increment count, it will be zero.
 
                 while (it.hasNext()) {
-                    count++;
+                    //count++;
                     MenuItem item = (MenuItem) it.next();
+                    int id = item.getId();
                     String outItem = item.getName() + "    $" + item.getPrice();
             %>
 
             <input type="checkbox" name="item" 
-                   value="<%= count%>" class="checkbox">
+                   value="<%= id%>" class="checkbox">
             <%= outItem%><br>
             <%
                 }
