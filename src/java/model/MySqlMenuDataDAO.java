@@ -72,23 +72,20 @@ public class MySqlMenuDataDAO implements IMenuDataDAO {
         List<Map> rawData = new ArrayList<>();
         MenuItem item = new MenuItem(0, "", 0.0);
         DBAccessor db = new DB_MySql();
+        Map rec;
 
         try {
             db.openConnection(DRIVER_CLASS_NAME, URL,
                     USER_NAME, PASSWORD);
-            String sql = "select item_id, name, price from restaurant.menu "
-                    + "where item_id=" + id;
+            rec = db.getRecordByID(TABLE, KEY, id, true);
 
-            rawData = db.findRecords(sql, true);
-            for (Map m : rawData) {
-                String strId = m.get("item_id").toString();
-                id = Integer.parseInt(strId);
-                String name = m.get("name").toString();
-                String strPrice = m.get("price").toString();
-                double price = Double.parseDouble(strPrice);
+            String strId = rec.get("item_id").toString();
+            id = Integer.parseInt(strId);
+            String name = rec.get("name").toString();
+            String strPrice = rec.get("price").toString();
+            double price = Double.parseDouble(strPrice);
 
-                item = new MenuItem(id, name, price);
-            }
+            item = new MenuItem(id, name, price);
 
         } catch (Exception e) {
             System.out.println("Exception in getMenuItems()");
