@@ -16,8 +16,9 @@
     <body>
         <h1>Your Order</h1> <br/>
         <%
-            String[] choices = request.getParameterValues("item");
-            List menu = (List)request.getAttribute("menu");
+            //String[] choices = request.getParameterValues("item");
+            //I am now passing only the menu items that were chosen
+            List<MenuItem> menu = (List)request.getAttribute("menu");
             String total = request.getAttribute("total").toString();
             String tax = request.getAttribute("tax").toString();
             String tip = request.getAttribute("tip").toString();
@@ -26,10 +27,8 @@
         %>
         <%
         
-            for(String s: choices) {
-                int i = Integer.parseInt(s);
-                MenuItem item = (MenuItem)menu.get(i);
-                String outItem = item.getName() + "    $" + item.getPrice();
+            for(MenuItem m: menu) {
+                String outItem = m.getName() + "    $" + m.getPrice();
         %>
             <p><%= outItem %></p>            
         <%

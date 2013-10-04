@@ -19,7 +19,7 @@ import model.*;
  *
  * @author Mark
  */
-@WebServlet(name = "MenuController", urlPatterns = {"/MenuController"})
+//@WebServlet(name = "MenuController", urlPatterns = {"/MenuController"})
 public class MenuController extends HttpServlet {
     private static final String RESULT_PAGE = "displaymenu.jsp";
 
@@ -36,6 +36,9 @@ public class MenuController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String title = this.getServletConfig().getInitParameter("myTitle");
+        request.setAttribute("myTitle", title);
+        
         PrintWriter out = response.getWriter();
         try {
             //MenuDataModelStrategy data = new MenuDataModelTest();

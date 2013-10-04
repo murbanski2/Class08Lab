@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -13,42 +14,43 @@ import java.util.Objects;
  * @author Mark
  */
 public class OrderModel {
-    private List menu;
+
+    private List<MenuItem> chosenMenuItems;
     private String[] choices;
     private static final double TAX_RATE = 0.05;
     private static final double TIP_RATE = 0.20;
+    private static final String TWO_DECIMAL_FORMAT = "#.##";
 
-    public OrderModel(List menu, String[] choices) {
-        this.menu = menu;
+    public OrderModel(String[] choices) {
+        //this.chosenMenuItems = chosenMenuItems;
         this.choices = choices;
+        setChosenMenuItemsFromChoices();
     }
 
     public double getTotal() {
         double total = 0;
-        for(String s: choices) {
-            int i = Integer.parseInt(s);
-            MenuItem item = (MenuItem)menu.get(i);
-            total += item.getPrice();
+        for (MenuItem m : chosenMenuItems) {
+            total += m.getPrice();
         }
-        return total;
-    }
-    
-    public double getTax() {
-        
-        return getTotal() * TAX_RATE;
-    }
-    
-    public double getTip() {
-        return getTotal() * TIP_RATE;
-    }
-    
-    
-    public List getMenu() {
-        return menu;
+        return roundTwoDecimals(total);
     }
 
-    public void setMenu(List menu) {
-        this.menu = menu;
+    public double getTax() {
+        double tax = getTotal() * TAX_RATE;
+        return roundTwoDecimals(tax);
+    }
+
+    public double getTip() {
+        double tip = getTotal() * TIP_RATE;
+        return roundTwoDecimals(tip);
+    }
+
+    public List getChosenMenuItems() {
+        return chosenMenuItems;
+    }
+
+    public void setChosenMenuItems(List chosenMenuItems) {
+        this.chosenMenuItems = chosenMenuItems;
     }
 
     public String[] getChoices() {
@@ -62,7 +64,7 @@ public class OrderModel {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.menu);
+        hash = 37 * hash + Objects.hashCode(this.chosenMenuItems);
         hash = 37 * hash + Arrays.deepHashCode(this.choices);
         return hash;
     }
@@ -76,7 +78,7 @@ public class OrderModel {
             return false;
         }
         final OrderModel other = (OrderModel) obj;
-        if (!Objects.equals(this.menu, other.menu)) {
+        if (!Objects.equals(this.chosenMenuItems, other.chosenMenuItems)) {
             return false;
         }
         if (!Arrays.deepEquals(this.choices, other.choices)) {
@@ -87,9 +89,18 @@ public class OrderModel {
 
     @Override
     public String toString() {
-        return "OrderModel{" + "menu=" + menu + ", choices=" + choices + '}';
+        return "OrderModel{" + "menu=" + chosenMenuItems + ", choices=" + choices + '}';
     }
-    
-    
-    
+
+    private void setChosenMenuItemsFromChoices() {
+        IMenuDataDAO data = new MySqlMenuDataDAO();
+        if (choices != null) {
+            chosenMenuItems = data.getSelectedMenuItems(choices);
+        }
+    }
+
+    private double roundTwoDecimals(double d) {
+        DecimalFormat twoDForm = new DecimalFormat(TWO_DECIMAL_FORMAT);
+        return Double.valueOf(twoDForm.format(d));
+    }
 }

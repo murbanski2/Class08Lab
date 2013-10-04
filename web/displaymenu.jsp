@@ -12,7 +12,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>The Sandwich Shop Menu</title>
+        
+        <title>${myTitle }</title>
         <script type="text/javascript" language="JavaScript">
 <!--
             function checkCheckBoxes() {
