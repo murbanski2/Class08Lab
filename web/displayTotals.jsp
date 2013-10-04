@@ -7,6 +7,7 @@
 <%@page import="model.MenuItem"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,26 +20,23 @@
             //String[] choices = request.getParameterValues("item");
             //I am now passing only the menu items that were chosen
             List<MenuItem> menu = (List)request.getAttribute("menu");
-            String total = request.getAttribute("total").toString();
-            String tax = request.getAttribute("tax").toString();
-            String tip = request.getAttribute("tip").toString();
-            double grandTotal = Double.parseDouble(total) 
-                    + Double.parseDouble(tax);
+
         %>
         <%
-        
-            for(MenuItem m: menu) {
-                String outItem = m.getName() + "    $" + m.getPrice();
+            if (menu != null){
+                for(MenuItem m: menu) {
+                    String outItem = m.getName() + "    $" + m.getPrice();
         %>
             <p><%= outItem %></p>            
         <%
+                }
             }
             
         %>
         <br/>
-        <p>Total = <%= total %></p>
-        <p>Tax = <%= tax %></p>
-        <p>Grand Total = <%= grandTotal %></p>
-        <p>Suggested Tip = <%= tip %></p>
+        <p>Total = $<fmt:formatNumber pattern="0.00" value="${total}"/></p>
+        <p>Tax = $<fmt:formatNumber pattern="0.00" value="${tax}"/></p>
+        <p>Grand Total = $<fmt:formatNumber pattern="0.00" value="${grandTotal}"/></p>
+        <p>Suggested Tip = $<fmt:formatNumber pattern="0.00" value="${tip}"/></p>
     </body>
 </html>

@@ -53,11 +53,13 @@ public class OrderController extends HttpServlet {
             double total = order.getTotal();
             double tax = order.getTax();
             double tip = order.getTip();
+            double grandTotal = total + tax;
             
             request.setAttribute("menu", menu);
             request.setAttribute("total", ("" + total));
             request.setAttribute("tax", ("" + tax));
             request.setAttribute("tip", ("" + tip));
+            request.setAttribute("grandTotal", ("" + grandTotal));
             
             RequestDispatcher view =
                 request.getRequestDispatcher(RESULT_PAGE);
